@@ -53,7 +53,7 @@ function getFilmingLocationsNumberPerYear () {
 	}
 	return {res}
 }
-console.log(getFilmingLocationsNumberPerYear())
+console.log()
 
 // 📝 TODO: Number of filming locations by district (arrondissement)
 // 1. Implement the function, the expected result is an object with
@@ -64,9 +64,14 @@ console.log(getFilmingLocationsNumberPerYear())
 //    }
 // 2. Log the result
 function getFilmingLocationsNumberPerDistrict () {
-	return {}
+	var res = {}
+	for(let element in filmingLocations){
+		let district = filmingLocations[element].fields.ardt_lieu
+		res[district] = (res[district]+1) || 1 ;
+	}
+	return {res}
 }
-console.log()
+console.log(getFilmingLocationsNumberPerDistrict())
 
 // 📝 TODO: Number of locations per film, sorted in descending order
 // 1. Implement the function, result expected as an array of object like:
