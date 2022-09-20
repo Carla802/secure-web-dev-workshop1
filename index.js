@@ -127,23 +127,41 @@ function getArseneFilmingLocations () {
 	}
 	return res
 }
-console.log(getArseneFilmingLocations())
+//console.log(getArseneFilmingLocations())
 
-// 📝 TODO: Tous les arrondissement des lieux de tournage de nos films favoris
+// 8 📝 TODO: Tous les arrondissement des lieux de tournage de nos films favoris
 //  (favoriteFilms)
 // 1. Return an array of all the districts of each favorite films given as a
 //    parameter. e.g. :
 //    const films = { 'LRDM - Patriot season 2': ['75013'] }
 // 2. Log the result
-function getFavoriteFilmsLocations (favoriteFilmsNames) {
-	return []
-}
 const favoriteFilms =
 	[
 		'LRDM - Patriot season 2',
 		'Alice NEVERS',
 		'Emily in Paris',
 	]
+
+function getFavoriteFilmsLocations (favoriteFilmsNames) {
+	var res = []
+	for (let j = 0 ; j < favoriteFilmsNames.length ; j++){
+		let film = favoriteFilmsNames[j]
+		for(let i=0 ; i < filmingLocations.length ; i++) {
+			let temp = filmingLocations[i]
+			if (temp.fields.nom_tournage == film) {
+				let district = temp.fields.ardt_lieu
+				if(res[film]){
+					res[film].push(district)
+				}
+				else{
+					res[film]= [district]
+				}
+			}
+		}
+	}
+	return res
+}
+console.log(getFavoriteFilmsLocations(favoriteFilms))
 
 // 📝 TODO: All filming locations for each film
 //     e.g. :
