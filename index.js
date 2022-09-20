@@ -12,30 +12,30 @@ console.log('🚀 It Works!');
  * Good luck, have fun !
  */
 
-// 📝 TODO: Number of filming locations
+// 1 📝 TODO: Number of filming locations
 // 1. Make the function return the number of filming locations
 function getFilmingLocationsNumber () {
 	return filmingLocations.length
 }
-console.log(`There is ${getFilmingLocationsNumber()} filming locations in Paris`)
+//console.log(`There is ${getFilmingLocationsNumber()} filming locations in Paris`)
 
-// 📝 TODO: Filming locations sorted by start date, from most recent to oldest.
+// 2 📝 TODO: Filming locations sorted by start date, from most recent to oldest.
 // 1. Implement the function
 // 2. Log the first and last item in array
 function sortFilmingLocationsByStartDate () {
 	const sorted = filmingLocations.sort((a, b) => new Date(b.fields.date_debut) - new Date(a.fields.date_debut))
-	return sorted[sorted.length-1]
+	return sorted
 }
-console.log()
+//console.log(sortFilmingLocationsByStartDate()[0])
 
-// 📝 TODO: Number of filming locations in 2020 only
+// 3 📝 TODO: Number of filming locations in 2020 only
 // 1. Make the function return the number of filming locations in 2020 only
 // 2. Log the result
 function getFilmingLocationsNumber2020 () {
 	const result = filmingLocations.filter(location => new Date(location.fields.date_debut).getFullYear() == 2020);
 	return result
 }
-console.log()
+//console.log(getFilmingLocationsNumber2020())
 
 // 📝 TODO: Number of filming locations per year
 // 1. Implement the function, the expected result is an object with years as
@@ -53,9 +53,9 @@ function getFilmingLocationsNumberPerYear () {
 	}
 	return {res}
 }
-console.log()
+//console.log(getFilmingLocationsNumberPerYear())
 
-// 📝 TODO: Number of filming locations by district (arrondissement)
+// 4 📝 TODO: Number of filming locations by district (arrondissement)
 // 1. Implement the function, the expected result is an object with
 // district as keys and filming locations number as value, e.g:
 //    const filmingLocationsPerDistrict = {
@@ -71,30 +71,63 @@ function getFilmingLocationsNumberPerDistrict () {
 	}
 	return {res}
 }
-console.log(getFilmingLocationsNumberPerDistrict())
+//console.log(getFilmingLocationsNumberPerDistrict())
 
-// 📝 TODO: Number of locations per film, sorted in descending order
+// 5 📝 TODO: Number of locations per film, sorted in descending order
 // 1. Implement the function, result expected as an array of object like:
 //    const result = [{film: 'LRDM - Patriot season 2', locations: 12}, {...}]
 // 2. Log the first and last item of the array
 function getFilmLocationsByFilm () {
-	return []
+	var res = []
+	var tournage= {}
+	for(let element in filmingLocations){
+		let film = filmingLocations[element].fields.nom_tournage
+		let temp = res.find(el => el.film == film)
+		if(temp){
+			temp.locations = temp.locations + 1
+		}
+		else{
+			tournage.film = film
+			tournage.locations = 1
+			res.push({...tournage})
+		}
+	}
+	res = res.sort((a, b) => b.locations - a.locations)
+	return res
 }
-console.log()
+//console.log(getFilmLocationsByFilm()[0])
+//console.log(getFilmLocationsByFilm()[getFilmLocationsByFilm().length-1])
 
-// 📝 TODO: Number of different films
+// 6 📝 TODO: Number of different films
 // 1. Implement the function
 // 2. Log the result
 function getNumberOfFilms() {
-	return ''
+	var compt=[]
+	var res=0
+	for(let i=0; i<filmingLocations.length; i++){
+		var temp = filmingLocations[i].fields.nom_tournage
+		if(!(compt.includes(temp))){
+			res+=1
+			compt.push(temp)
+		}
+	}
+	return res
 }
+// console.log(getNumberOfFilms())
 
-// 📝 TODO: All the filming locations of `LRDM - Patriot season 2`
+// 7 📝 TODO: All the filming locations of `LRDM - Patriot season 2`
 // 1. Return an array with all filming locations of LRDM - Patriot season 2
 // 2. Log the result
 function getArseneFilmingLocations () {
-	return []
+	var res = []
+	for (let i=0; i < filmingLocations.length; i++){
+		if(filmingLocations[i].fields.nom_tournage == 'LRDM - Patriot season 2'){
+			res.push(filmingLocations[i].fields.adresse_lieu)
+		}
+	}
+	return res
 }
+console.log(getArseneFilmingLocations())
 
 // 📝 TODO: Tous les arrondissement des lieux de tournage de nos films favoris
 //  (favoriteFilms)
