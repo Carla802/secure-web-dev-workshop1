@@ -103,7 +103,7 @@ function getFilmLocationsByFilm () {
 // 2. Log the result
 function getNumberOfFilms() {
 	var compt=[]
-	const res=0
+	var res=0
 	for(let i=0; i<filmingLocations.length; i++){
 		var temp = filmingLocations[i].fields.nom_tournage
 		if(!(compt.includes(temp))){
