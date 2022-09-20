@@ -37,7 +37,7 @@ function getFilmingLocationsNumber2020 () {
 }
 //console.log(getFilmingLocationsNumber2020())
 
-// 📝 TODO: Number of filming locations per year
+// 4 📝 TODO: Number of filming locations per year
 // 1. Implement the function, the expected result is an object with years as
 // keys and filming locations number as value, e.g:
 //    const filmingLocationsPerYear = {
@@ -46,16 +46,16 @@ function getFilmingLocationsNumber2020 () {
 //    }
 // 2. Log the result
 function getFilmingLocationsNumberPerYear () {
-	var res = {}
+	const filmingLocationsPerYear = {}
 	for(let element in filmingLocations){
 		let year = new Date(filmingLocations[element].fields.date_debut).getFullYear()
-		res[year] = (res[year]+1) || 1 ;
+		filmingLocationsPerYear[year] = (filmingLocationsPerYear[year]+1) || 1 ;
 	}
-	return {res}
+	return filmingLocationsPerYear
 }
 //console.log(getFilmingLocationsNumberPerYear())
 
-// 4 📝 TODO: Number of filming locations by district (arrondissement)
+// 5 📝 TODO: Number of filming locations by district (arrondissement)
 // 1. Implement the function, the expected result is an object with
 // district as keys and filming locations number as value, e.g:
 //    const filmingLocationsPerDistrict = {
@@ -64,16 +64,16 @@ function getFilmingLocationsNumberPerYear () {
 //    }
 // 2. Log the result
 function getFilmingLocationsNumberPerDistrict () {
-	var res = {}
+	const filmingLocationsPerDistrict = {}
 	for(let element in filmingLocations){
 		let district = filmingLocations[element].fields.ardt_lieu
-		res[district] = (res[district]+1) || 1 ;
+		filmingLocationsPerDistrict[district] = (filmingLocationsPerDistrict[district]+1) || 1 ;
 	}
-	return {res}
+	return filmingLocationsPerDistrict
 }
 //console.log(getFilmingLocationsNumberPerDistrict())
 
-// 5 📝 TODO: Number of locations per film, sorted in descending order
+// 6 📝 TODO: Number of locations per film, sorted in descending order
 // 1. Implement the function, result expected as an array of object like:
 //    const result = [{film: 'LRDM - Patriot season 2', locations: 12}, {...}]
 // 2. Log the first and last item of the array
@@ -98,12 +98,12 @@ function getFilmLocationsByFilm () {
 //console.log(getFilmLocationsByFilm()[0])
 //console.log(getFilmLocationsByFilm()[getFilmLocationsByFilm().length-1])
 
-// 6 📝 TODO: Number of different films
+// 7 📝 TODO: Number of different films
 // 1. Implement the function
 // 2. Log the result
 function getNumberOfFilms() {
 	var compt=[]
-	var res=0
+	const res=0
 	for(let i=0; i<filmingLocations.length; i++){
 		var temp = filmingLocations[i].fields.nom_tournage
 		if(!(compt.includes(temp))){
@@ -115,21 +115,21 @@ function getNumberOfFilms() {
 }
 // console.log(getNumberOfFilms())
 
-// 7 📝 TODO: All the filming locations of `LRDM - Patriot season 2`
+// 8 📝 TODO: All the filming locations of `LRDM - Patriot season 2`
 // 1. Return an array with all filming locations of LRDM - Patriot season 2
 // 2. Log the result
 function getArseneFilmingLocations () {
 	var res = []
-	for (let i=0; i < filmingLocations.length; i++){
-		if(filmingLocations[i].fields.nom_tournage == 'LRDM - Patriot season 2'){
-			res.push(filmingLocations[i].fields.adresse_lieu)
+	for (let element in filmingLocations){
+		if(filmingLocations[element].fields.nom_tournage == 'LRDM - Patriot season 2'){
+			res.push(filmingLocations[element].fields.adresse_lieu)
 		}
 	}
 	return res
 }
-//console.log(getArseneFilmingLocations())
+console.log(getArseneFilmingLocations())
 
-// 8 📝 TODO: Tous les arrondissement des lieux de tournage de nos films favoris
+// 9 📝 TODO: Tous les arrondissement des lieux de tournage de nos films favoris
 //  (favoriteFilms)
 // 1. Return an array of all the districts of each favorite films given as a
 //    parameter. e.g. :
@@ -143,7 +143,7 @@ const favoriteFilms =
 	]
 
 function getFavoriteFilmsLocations (favoriteFilmsNames) {
-	var res = []
+	const res = []
 	for (let j = 0 ; j < favoriteFilmsNames.length ; j++){
 		let film = favoriteFilmsNames[j]
 		for(let i=0 ; i < filmingLocations.length ; i++) {
@@ -161,33 +161,63 @@ function getFavoriteFilmsLocations (favoriteFilmsNames) {
 	}
 	return res
 }
-console.log(getFavoriteFilmsLocations(favoriteFilms))
+//console.log(getFavoriteFilmsLocations(favoriteFilms))
 
-// 📝 TODO: All filming locations for each film
+// 10 📝 TODO: All filming locations for each film
 //     e.g. :
 //     const films = {
 //        'LRDM - Patriot season 2': [{...}],
 //        'Une jeune fille qui va bien': [{...}]
 //     }
 function getFilmingLocationsPerFilm () {
-	return { }
+	const res = {}
+	for (let i = 0 ; i < filmingLocations.length ; i++){
+		let film=filmingLocations[i].fields.nom_tournage
+		let location=filmingLocations[i].fields.adresse_lieu
+		if(res[film]){
+			res[film].push(location)
+		}
+		else{
+			res[film]= [location]
+		}
+	}
+	return res
 }
+//console.log(getFilmingLocationsPerFilm()['LRDM - Patriot season 2'])
 
-// 📝 TODO: Count each type of film (Long métrage, Série TV, etc...)
+// 11 📝 TODO: Count each type of film (Long métrage, Série TV, etc...)
 // 1. Implement the function
 // 2. Log the result
 function countFilmingTypes () {
-	return {}
+	var res = {}
+	for(let element in filmingLocations){
+		let type = filmingLocations[element].fields.type_tournage
+		res[type] = (res[type]+1) || 1 ;
+	}
+	return {res}
 }
+//console.log(countFilmingTypes())
 
-// 📝 TODO: Sort each type of filming by count, from highest to lowest
+// 12 📝 TODO: Sort each type of filming by count, from highest to lowest
 // 1. Implement the function. It should return a sorted array of objects like:
 //    [{type: 'Long métrage', count: 1234}, {...}]
 // 2. Log the result
 function sortedCountFilmingTypes () {
-	return []
+	var res = []
+	let count = countFilmingTypes()
+	for(let element in filmingLocations){
+		let typetournage = filmingLocations[element].fields.type_tournage
+		let temp = res.find(el => el.type == typetournage)
+		if(temp){
+			temp.count +=1
+		}
+		else{
+			res.push({type : typetournage, count : 1})
+		}
+	}
+	return res
 }
-
+//console.log(sortedCountFilmingTypes())
 /**
  * This arrow functions takes a duration in milliseconds and returns a
  * human-readable string of the duration
@@ -196,10 +226,10 @@ function sortedCountFilmingTypes () {
  */
 const duration = (ms) => `${(ms/(1000*60*60*24)).toFixed(0)} days, ${((ms/(1000*60*60))%24).toFixed(0)} hours and ${((ms/(1000*60))%60).toFixed(0)} minutes`
 
-// 📝 TODO: Find the filming location with the longest duration
+// 13 📝 TODO: Find the filming location with the longest duration
 // 1. Implement the function
 // 2. Log the filming location, and its computed duration
 
-// 📝 TODO: Compute the average filming duration
+// 14 📝 TODO: Compute the average filming duration
 // 1. Implement the function
 // 2. Log the result
